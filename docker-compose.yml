@@ -1,7 +1,7 @@
 services:
   backend:
     build:
-      context: /home/runner/work/whatsapp-Ai-/whatsapp-Ai-/backend
+      context: ./backend
     environment:
       OAUTHLIB_INSECURE_TRANSPORT: "1"
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
@@ -16,7 +16,7 @@ services:
 
   frontend:
     build:
-      context: /home/runner/work/whatsapp-Ai-/whatsapp-Ai-/frontend
+      context: ./frontend
     environment:
       VITE_API_BASE: http://backend:8000
     ports:

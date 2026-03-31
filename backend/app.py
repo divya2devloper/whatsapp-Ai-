@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -28,8 +28,10 @@ def trial_status(business_id: str) -> tuple:
         first_login_at = datetime.fromisoformat(first_login_raw)
     except ValueError:
         return jsonify({"error": "first_login_at must be ISO-8601"}), 400
+    if first_login_at.tzinfo is None:
+        first_login_at = first_login_at.replace(tzinfo=timezone.utc)
 
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     expires_at = first_login_at + TRIAL_DURATION
     expired = now >= expires_at
 
