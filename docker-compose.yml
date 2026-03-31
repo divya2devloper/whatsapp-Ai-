@@ -1,0 +1,31 @@
+services:
+  backend:
+    build:
+      context: /home/runner/work/whatsapp-Ai-/whatsapp-Ai-/backend
+    environment:
+      OAUTHLIB_INSECURE_TRANSPORT: "1"
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_KEY: ${SUPABASE_KEY}
+      REVENUE_SECRET: ${REVENUE_SECRET}
+    ports:
+      - "8000:8000"
+    networks:
+      - brain_network
+
+  frontend:
+    build:
+      context: /home/runner/work/whatsapp-Ai-/whatsapp-Ai-/frontend
+    environment:
+      VITE_API_BASE: http://backend:8000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - brain_network
+
+networks:
+  brain_network:
+    driver: bridge
