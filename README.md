@@ -1,6 +1,8 @@
-# Brain 2.0 Orchestrator
+# Gym-Brain
 
-Industrial, premium, ROI-focused AI CRM and automation platform architecture for the Indian SME market.
+Gym-Brain is a 100% containerized, multi-tenant AI Orchestrator designed exclusively for Gym owners and Fitness Studios in the Indian market.
+
+The only AI tool built to scale Indian Gyms.
 
 ## One-Command Setup
 
@@ -44,6 +46,10 @@ Frontend API calls under `/api` are proxied to the backend service on the Docker
 
 ## Multi-Tenant and Trial Guardrails
 
-- All tenancy-sensitive flows must resolve data by dynamic `business_id` (never hardcoded IDs).
-- New sign-ups must always start fresh provisioning logic (no demo fallback leakage).
+- Supabase entities are `GymOwner (id, gmail, gym_name, plan_type, first_login_at)` and `GymBranch (id, owner_id, upi_id, branch_location, whatsapp_phone_id)`.
+- New Gym login always provisions a fresh dashboard for tenant modules.
+- No leakage is allowed into Hiring (Trainers) and WhatsApp (Member Chats) modules from any MASTER_DEMO data.
 - Trial urgency engine is based on `first_login_at + 72 hours`, with post-expiry lockout countdown handling.
+- Hinglish AI replies support member renewals, diet nudges, and personal training conversations.
+- Google integration exposes Gmail readonly and Calendar events scopes for lead sync and free-trial booking workflows.
+- Suggested RLS policy shape: `GymOwner.gmail == auth.jwt() ->> 'email'`.
